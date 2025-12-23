@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: tech-challenge-app
+    ports:
+      - '3000:3000'
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/fiap_tech_challenge
+      - PORT=3000
+    depends_on:
+      - mongo
+    volumes:
+      - .:/usr/src/app
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:6.0
+    container_name: tech-challenge-mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
