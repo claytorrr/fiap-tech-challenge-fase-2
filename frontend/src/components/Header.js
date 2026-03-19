@@ -80,9 +80,13 @@ const Header = () => {
   const { user, isAuthenticated, logout } = useAuth();
 
   const handleLogout = () => {
-    logout();
-    // Força reload completo para garantir limpeza total do estado
-    window.location.href = '/';
+    // Navega PRIMEIRO para a home, DEPOIS faz logout
+    // Isso previne que o PrivateRoute redirecione para /login
+    navigate('/', { replace: true });
+    // Usa setTimeout para garantir que a navegação aconteça primeiro
+    setTimeout(() => {
+      logout();
+    }, 0);
   };
 
   return (
