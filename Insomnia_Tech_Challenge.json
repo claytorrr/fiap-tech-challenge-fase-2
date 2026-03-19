@@ -1,0 +1,187 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-01-17T14:30:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "req_1",
+      "parentId": "fld_1",
+      "modified": 1705501800000,
+      "created": 1705501800000,
+      "url": "{{ _.base_url }}/",
+      "name": "0. Health Check",
+      "description": "Verifica se a API está rodando",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705501800000,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_2",
+      "parentId": "fld_1",
+      "modified": 1705501800000,
+      "created": 1705501800000,
+      "url": "{{ _.base_url }}/posts",
+      "name": "1. Listar Todos os Posts",
+      "description": "GET - Lista todos os posts ordenados por data",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705501700000,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_3",
+      "parentId": "fld_1",
+      "modified": 1705501800000,
+      "created": 1705501800000,
+      "url": "{{ _.base_url }}/posts",
+      "name": "2. Criar Post",
+      "description": "POST - Cria um novo post",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"Introdução à Programação\",\n  \"conteudo\": \"Neste post vamos aprender os conceitos básicos de programação, incluindo variáveis, estruturas de controle e funções.\",\n  \"autor\": \"Prof. Maria Santos\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1705501600000,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_4",
+      "parentId": "fld_1",
+      "modified": 1705501800000,
+      "created": 1705501800000,
+      "url": "{{ _.base_url }}/posts/AQUI_VAI_O_ID",
+      "name": "3. Buscar Post por ID",
+      "description": "GET - Busca um post específico pelo ID",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705501500000,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_5",
+      "parentId": "fld_1",
+      "modified": 1705501800000,
+      "created": 1705501800000,
+      "url": "{{ _.base_url }}/posts/AQUI_VAI_O_ID",
+      "name": "4. Editar Post",
+      "description": "PUT - Atualiza um post existente",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"Introdução à Programação - Atualizado\",\n  \"conteudo\": \"Conteúdo atualizado com mais exemplos práticos e exercícios.\",\n  \"autor\": \"Prof. Maria Santos\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1705501400000,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_6",
+      "parentId": "fld_1",
+      "modified": 1705501800000,
+      "created": 1705501800000,
+      "url": "{{ _.base_url }}/posts/AQUI_VAI_O_ID",
+      "name": "5. Deletar Post",
+      "description": "DELETE - Remove um post",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705501300000,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "req_7",
+      "parentId": "fld_1",
+      "modified": 1705501800000,
+      "created": 1705501800000,
+      "url": "{{ _.base_url }}/posts/search",
+      "name": "6. Buscar Posts por Palavra-chave",
+      "description": "GET - Busca posts que contenham a palavra no título ou conteúdo",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "q",
+          "value": "programação"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1705501200000,
+      "isPrivate": false,
+      "_type": "request"
+    },
+    {
+      "_id": "fld_1",
+      "parentId": "wrk_1",
+      "modified": 1705501800000,
+      "created": 1705501800000,
+      "name": "Tech Challenge - Fase 2",
+      "description": "Endpoints da API de Blogging para Professores",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1705501800000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_1",
+      "parentId": null,
+      "modified": 1705501800000,
+      "created": 1705501800000,
+      "name": "FIAP Tech Challenge",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_1",
+      "parentId": "wrk_1",
+      "modified": 1705501800000,
+      "created": 1705501800000,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3000"
+      },
+      "dataPropertyOrder": {
+        "&": ["base_url"]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1705501800000,
+      "_type": "environment"
+    }
+  ]
+}

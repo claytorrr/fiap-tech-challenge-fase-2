@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DOCUMENTACAO_TECH_CHALLENGE.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="tech-challenge---fase-2">Tech Challenge - Fase 2</h1>
+<h2 id="plataforma-de-blogging-para-professores-da-rede-p%C3%BAblica">Plataforma de Blogging para Professores da Rede Pública</h2>
+<hr>
+<p><strong>Aluno:</strong> Clayton Gomes<br>
+<strong>Email:</strong> claytonabgomes@gmail.com<br>
+<strong>Curso:</strong> Pós-graduação FIAP - Software Architecture<br>
+<strong>Data:</strong> Janeiro de 2026<br>
+<strong>Repositório:</strong> https://github.com/claytorrr/fiap-tech-challenge-fase-2</p>
+<hr>
+<h2 id="sum%C3%A1rio">Sumário</h2>
+<ol>
+<li><a href="#introdu%C3%A7%C3%A3o">Introdução</a></li>
+<li><a href="#objetivos-do-projeto">Objetivos do Projeto</a></li>
+<li><a href="#requisitos-funcionais">Requisitos Funcionais</a></li>
+<li><a href="#requisitos-n%C3%A3o-funcionais">Requisitos Não Funcionais</a></li>
+<li><a href="#arquitetura-da-solu%C3%A7%C3%A3o">Arquitetura da Solução</a></li>
+<li><a href="#tecnologias-utilizadas">Tecnologias Utilizadas</a></li>
+<li><a href="#estrutura-do-projeto">Estrutura do Projeto</a></li>
+<li><a href="#modelagem-de-dados">Modelagem de Dados</a></li>
+<li><a href="#endpoints-da-api">Endpoints da API</a></li>
+<li><a href="#testes-automatizados">Testes Automatizados</a></li>
+<li><a href="#containeriza%C3%A7%C3%A3o-com-docker">Containerização com Docker</a></li>
+<li><a href="#cicd">CI/CD</a></li>
+<li><a href="#como-executar-o-projeto">Como Executar o Projeto</a></li>
+<li><a href="#evid%C3%AAncias-de-funcionamento">Evidências de Funcionamento</a></li>
+<li><a href="#desafios-e-aprendizados">Desafios e Aprendizados</a></li>
+<li><a href="#conclus%C3%A3o">Conclusão</a></li>
+</ol>
+<hr>
+<h2 id="1-introdu%C3%A7%C3%A3o">1. Introdução</h2>
+<p>Este projeto foi desenvolvido como parte do <strong>Tech Challenge da Fase 2</strong> da pós-graduação em Software Architecture da FIAP. O desafio consiste em criar uma plataforma de blogging voltada para professores da rede pública de ensino, permitindo que eles compartilhem conhecimentos, experiências e conteúdos educacionais de forma centralizada e acessível.</p>
+<p>A solução foi construída seguindo princípios de arquitetura de software, boas práticas de desenvolvimento e metodologias ágeis, com foco em qualidade, testabilidade e facilidade de manutenção.</p>
+<hr>
+<h2 id="2-objetivos-do-projeto">2. Objetivos do Projeto</h2>
+<h3 id="objetivo-geral">Objetivo Geral</h3>
+<p>Desenvolver uma API RESTful robusta e escalável que permita o gerenciamento completo de postagens em um blog educacional.</p>
+<h3 id="objetivos-espec%C3%ADficos">Objetivos Específicos</h3>
+<ul>
+<li>Implementar operações CRUD (Create, Read, Update, Delete) para postagens</li>
+<li>Desenvolver funcionalidade de busca por palavras-chave</li>
+<li>Garantir persistência de dados em banco de dados NoSQL</li>
+<li>Containerizar a aplicação com Docker</li>
+<li>Implementar testes automatizados com boa cobertura</li>
+<li>Configurar pipeline de CI/CD</li>
+<li>Documentar adequadamente o projeto</li>
+</ul>
+<hr>
+<h2 id="3-requisitos-funcionais">3. Requisitos Funcionais</h2>
+<h3 id="rf01---cria%C3%A7%C3%A3o-de-postagens">RF01 - Criação de Postagens</h3>
+<p>O sistema deve permitir a criação de novas postagens contendo:</p>
+<ul>
+<li>Título (obrigatório)</li>
+<li>Conteúdo (obrigatório)</li>
+<li>Autor (obrigatório)</li>
+<li>Data de criação (automática)</li>
+</ul>
+<h3 id="rf02---listagem-de-postagens">RF02 - Listagem de Postagens</h3>
+<p>O sistema deve listar todas as postagens ordenadas por data de criação (mais recentes primeiro).</p>
+<h3 id="rf03---busca-por-id">RF03 - Busca por ID</h3>
+<p>O sistema deve permitir buscar uma postagem específica através de seu identificador único.</p>
+<h3 id="rf04---edi%C3%A7%C3%A3o-de-postagens">RF04 - Edição de Postagens</h3>
+<p>O sistema deve permitir atualizar título, conteúdo e autor de postagens existentes.</p>
+<h3 id="rf05---exclus%C3%A3o-de-postagens">RF05 - Exclusão de Postagens</h3>
+<p>O sistema deve permitir remover postagens do banco de dados.</p>
+<h3 id="rf06---busca-por-palavra-chave">RF06 - Busca por Palavra-chave</h3>
+<p>O sistema deve permitir buscar postagens que contenham determinada palavra-chave no título ou conteúdo (busca case-insensitive).</p>
+<hr>
+<h2 id="4-requisitos-n%C3%A3o-funcionais">4. Requisitos Não Funcionais</h2>
+<h3 id="rnf01---performance">RNF01 - Performance</h3>
+<p>A API deve responder às requisições em tempo adequado (&lt; 1 segundo).</p>
+<h3 id="rnf02---escalabilidade">RNF02 - Escalabilidade</h3>
+<p>A arquitetura deve suportar containerização para facilitar escalabilidade horizontal.</p>
+<h3 id="rnf03---testabilidade">RNF03 - Testabilidade</h3>
+<p>O código deve ter cobertura de testes superior a 70%.</p>
+<h3 id="rnf04---manutenibilidade">RNF04 - Manutenibilidade</h3>
+<p>O código deve seguir boas práticas e ser bem documentado.</p>
+<h3 id="rnf05---disponibilidade">RNF05 - Disponibilidade</h3>
+<p>A aplicação deve estar disponível através de containers Docker.</p>
+<h3 id="rnf06---qualidade">RNF06 - Qualidade</h3>
+<p>Pipeline de CI/CD deve garantir que alterações não quebrem a aplicação.</p>
+<hr>
+<h2 id="5-arquitetura-da-solu%C3%A7%C3%A3o">5. Arquitetura da Solução</h2>
+<h3 id="arquitetura-em-camadas">Arquitetura em Camadas</h3>
+<pre class="hljs"><code><div>┌─────────────────────────────────────┐
+│         Cliente (Insomnia)          │
+└───────────────┬─────────────────────┘
+                │ HTTP/REST
+                ▼
+┌─────────────────────────────────────┐
+│        Camada de Rotas (Routes)     │
+│         Express Router              │
+└───────────────┬─────────────────────┘
+                │
+                ▼
+┌─────────────────────────────────────┐
+│      Camada de Modelos (Models)     │
+│         Mongoose Schemas            │
+└───────────────┬─────────────────────┘
+                │
+                ▼
+┌─────────────────────────────────────┐
+│      Banco de Dados (MongoDB)       │
+└─────────────────────────────────────┘
+</div></code></pre>
+<h3 id="padr%C3%B5es-utilizados">Padrões Utilizados</h3>
+<ul>
+<li><strong>REST</strong>: Para comunicação entre cliente e servidor</li>
+<li><strong>MVC</strong>: Separação de responsabilidades (Model-View-Controller adaptado)</li>
+<li><strong>Dependency Injection</strong>: Configuração de dependências via Express</li>
+<li><strong>Repository Pattern</strong>: Mongoose atua como camada de abstração do banco</li>
+</ul>
+<hr>
+<h2 id="6-tecnologias-utilizadas">6. Tecnologias Utilizadas</h2>
+<h3 id="backend">Backend</h3>
+<ul>
+<li><strong>Node.js 18</strong>: Runtime JavaScript</li>
+<li><strong>Express 5</strong>: Framework web minimalista</li>
+<li><strong>Mongoose 8</strong>: ODM para MongoDB</li>
+</ul>
+<h3 id="banco-de-dados">Banco de Dados</h3>
+<ul>
+<li><strong>MongoDB 6</strong>: Banco NoSQL orientado a documentos</li>
+</ul>
+<h3 id="testes">Testes</h3>
+<ul>
+<li><strong>Jest 30</strong>: Framework de testes</li>
+<li><strong>Supertest 7</strong>: Testes de integração HTTP</li>
+</ul>
+<h3 id="containeriza%C3%A7%C3%A3o">Containerização</h3>
+<ul>
+<li><strong>Docker</strong>: Containerização da aplicação</li>
+<li><strong>Docker Compose</strong>: Orquestração de múltiplos containers</li>
+</ul>
+<h3 id="cicd">CI/CD</h3>
+<ul>
+<li><strong>GitHub Actions</strong>: Pipeline de integração contínua</li>
+</ul>
+<h3 id="outras-depend%C3%AAncias">Outras Dependências</h3>
+<ul>
+<li><strong>dotenv</strong>: Gerenciamento de variáveis de ambiente</li>
+<li><strong>CORS</strong>: Configuração de Cross-Origin Resource Sharing</li>
+</ul>
+<hr>
+<h2 id="7-estrutura-do-projeto">7. Estrutura do Projeto</h2>
+<pre class="hljs"><code><div>fiap-tech-challenge-fase-2/
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # Pipeline CI/CD
+├── src/
+│   ├── models/
+│   │   └── Post.js             # Schema do modelo Post
+│   ├── routes/
+│   │   └── posts.js            # Rotas da API
+│   ├── app.js                  # Configuração do Express
+│   └── index.js                # Ponto de entrada
+├── tests/
+│   └── posts.test.js           # Testes automatizados
+├── coverage/                   # Relatórios de cobertura
+├── .dockerignore               # Arquivos ignorados no build
+├── Dockerfile                  # Imagem Docker da aplicação
+├── docker-compose.yml          # Orquestração de containers
+├── package.json                # Dependências do projeto
+├── .env                        # Variáveis de ambiente
+└── README.md                   # Documentação principal
+</div></code></pre>
+<hr>
+<h2 id="8-modelagem-de-dados">8. Modelagem de Dados</h2>
+<h3 id="schema-do-post">Schema do Post</h3>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">titulo</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>,
+    <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">trim</span>: <span class="hljs-literal">true</span>
+  },
+  <span class="hljs-attr">conteudo</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>,
+    <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>
+  },
+  <span class="hljs-attr">autor</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>,
+    <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">trim</span>: <span class="hljs-literal">true</span>
+  },
+  <span class="hljs-attr">criadoEm</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">Date</span>,
+    <span class="hljs-attr">default</span>: <span class="hljs-built_in">Date</span>.now
+  }
+}
+</div></code></pre>
+<h3 id="exemplo-de-documento">Exemplo de Documento</h3>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"696ba6705b9ee58729339c5b"</span>,
+  <span class="hljs-attr">"titulo"</span>: <span class="hljs-string">"Introdução à Programação"</span>,
+  <span class="hljs-attr">"conteudo"</span>: <span class="hljs-string">"Neste post vamos aprender os conceitos básicos..."</span>,
+  <span class="hljs-attr">"autor"</span>: <span class="hljs-string">"Prof. Maria Santos"</span>,
+  <span class="hljs-attr">"criadoEm"</span>: <span class="hljs-string">"2026-01-17T15:10:40.768Z"</span>,
+  <span class="hljs-attr">"__v"</span>: <span class="hljs-number">0</span>
+}
+</div></code></pre>
+<hr>
+<h2 id="9-endpoints-da-api">9. Endpoints da API</h2>
+<h3 id="base-url">Base URL</h3>
+<pre class="hljs"><code><div>http://localhost:3000
+</div></code></pre>
+<h3 id="91-health-check">9.1 Health Check</h3>
+<p><strong>GET /</strong></p>
+<p>Verifica se a API está funcionando.</p>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>API Tech Challenge rodando!
+</div></code></pre>
+<hr>
+<h3 id="92-listar-todos-os-posts">9.2 Listar Todos os Posts</h3>
+<p><strong>GET /posts</strong></p>
+<p>Lista todas as postagens ordenadas por data (mais recentes primeiro).</p>
+<p><strong>Response (200 OK):</strong></p>
+<pre class="hljs"><code><div>[
+  {
+    <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"696ba6705b9ee58729339c5b"</span>,
+    <span class="hljs-attr">"titulo"</span>: <span class="hljs-string">"Introdução à Programação"</span>,
+    <span class="hljs-attr">"conteudo"</span>: <span class="hljs-string">"Conteúdo do post..."</span>,
+    <span class="hljs-attr">"autor"</span>: <span class="hljs-string">"Prof. Maria Santos"</span>,
+    <span class="hljs-attr">"criadoEm"</span>: <span class="hljs-string">"2026-01-17T15:10:40.768Z"</span>,
+    <span class="hljs-attr">"__v"</span>: <span class="hljs-number">0</span>
+  }
+]
+</div></code></pre>
+<hr>
+<h3 id="93-criar-post">9.3 Criar Post</h3>
+<p><strong>POST /posts</strong></p>
+<p>Cria uma nova postagem.</p>
+<p><strong>Request Body:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"titulo"</span>: <span class="hljs-string">"Introdução à Programação"</span>,
+  <span class="hljs-attr">"conteudo"</span>: <span class="hljs-string">"Neste post vamos aprender..."</span>,
+  <span class="hljs-attr">"autor"</span>: <span class="hljs-string">"Prof. Maria Santos"</span>
+}
+</div></code></pre>
+<p><strong>Response (201 Created):</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"696ba6705b9ee58729339c5b"</span>,
+  <span class="hljs-attr">"titulo"</span>: <span class="hljs-string">"Introdução à Programação"</span>,
+  <span class="hljs-attr">"conteudo"</span>: <span class="hljs-string">"Neste post vamos aprender..."</span>,
+  <span class="hljs-attr">"autor"</span>: <span class="hljs-string">"Prof. Maria Santos"</span>,
+  <span class="hljs-attr">"criadoEm"</span>: <span class="hljs-string">"2026-01-17T15:10:40.768Z"</span>,
+  <span class="hljs-attr">"__v"</span>: <span class="hljs-number">0</span>
+}
+</div></code></pre>
+<p><strong>Response (400 Bad Request):</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Erro ao criar post."</span>
+}
+</div></code></pre>
+<hr>
+<h3 id="94-buscar-post-por-id">9.4 Buscar Post por ID</h3>
+<p><strong>GET /posts/:id</strong></p>
+<p>Busca uma postagem específica pelo ID.</p>
+<p><strong>Response (200 OK):</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"696ba6705b9ee58729339c5b"</span>,
+  <span class="hljs-attr">"titulo"</span>: <span class="hljs-string">"Introdução à Programação"</span>,
+  <span class="hljs-attr">"conteudo"</span>: <span class="hljs-string">"Neste post vamos aprender..."</span>,
+  <span class="hljs-attr">"autor"</span>: <span class="hljs-string">"Prof. Maria Santos"</span>,
+  <span class="hljs-attr">"criadoEm"</span>: <span class="hljs-string">"2026-01-17T15:10:40.768Z"</span>,
+  <span class="hljs-attr">"__v"</span>: <span class="hljs-number">0</span>
+}
+</div></code></pre>
+<p><strong>Response (404 Not Found):</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Post não encontrado."</span>
+}
+</div></code></pre>
+<hr>
+<h3 id="95-editar-post">9.5 Editar Post</h3>
+<p><strong>PUT /posts/:id</strong></p>
+<p>Atualiza uma postagem existente.</p>
+<p><strong>Request Body:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"titulo"</span>: <span class="hljs-string">"Introdução à Programação - Atualizado"</span>,
+  <span class="hljs-attr">"conteudo"</span>: <span class="hljs-string">"Conteúdo atualizado..."</span>,
+  <span class="hljs-attr">"autor"</span>: <span class="hljs-string">"Prof. Maria Santos"</span>
+}
+</div></code></pre>
+<p><strong>Response (200 OK):</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"696ba6705b9ee58729339c5b"</span>,
+  <span class="hljs-attr">"titulo"</span>: <span class="hljs-string">"Introdução à Programação - Atualizado"</span>,
+  <span class="hljs-attr">"conteudo"</span>: <span class="hljs-string">"Conteúdo atualizado..."</span>,
+  <span class="hljs-attr">"autor"</span>: <span class="hljs-string">"Prof. Maria Santos"</span>,
+  <span class="hljs-attr">"criadoEm"</span>: <span class="hljs-string">"2026-01-17T15:10:40.768Z"</span>,
+  <span class="hljs-attr">"__v"</span>: <span class="hljs-number">0</span>
+}
+</div></code></pre>
+<p><strong>Response (404 Not Found):</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Post não encontrado."</span>
+}
+</div></code></pre>
+<hr>
+<h3 id="96-deletar-post">9.6 Deletar Post</h3>
+<p><strong>DELETE /posts/:id</strong></p>
+<p>Remove uma postagem.</p>
+<p><strong>Response (200 OK):</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Post removido com sucesso."</span>
+}
+</div></code></pre>
+<p><strong>Response (404 Not Found):</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Post não encontrado."</span>
+}
+</div></code></pre>
+<hr>
+<h3 id="97-buscar-posts-por-palavra-chave">9.7 Buscar Posts por Palavra-chave</h3>
+<p><strong>GET /posts/search?q=palavra</strong></p>
+<p>Busca postagens que contenham a palavra-chave no título ou conteúdo (case-insensitive).</p>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>q</code> (obrigatório): Termo de busca</li>
+</ul>
+<p><strong>Response (200 OK):</strong></p>
+<pre class="hljs"><code><div>[
+  {
+    <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"696ba6705b9ee58729339c5b"</span>,
+    <span class="hljs-attr">"titulo"</span>: <span class="hljs-string">"Introdução à Programação"</span>,
+    <span class="hljs-attr">"conteudo"</span>: <span class="hljs-string">"Neste post vamos aprender..."</span>,
+    <span class="hljs-attr">"autor"</span>: <span class="hljs-string">"Prof. Maria Santos"</span>,
+    <span class="hljs-attr">"criadoEm"</span>: <span class="hljs-string">"2026-01-17T15:10:40.768Z"</span>,
+    <span class="hljs-attr">"__v"</span>: <span class="hljs-number">0</span>
+  }
+]
+</div></code></pre>
+<p><strong>Response (400 Bad Request):</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Termo de busca não informado."</span>
+}
+</div></code></pre>
+<hr>
+<h2 id="10-testes-automatizados">10. Testes Automatizados</h2>
+<h3 id="estrat%C3%A9gia-de-testes">Estratégia de Testes</h3>
+<p>Foram implementados <strong>testes de integração</strong> utilizando Jest e Supertest, validando o funcionamento end-to-end da API.</p>
+<h3 id="casos-de-teste-implementados">Casos de Teste Implementados</h3>
+<ol>
+<li>
+<p><strong>Deve criar um novo post</strong></p>
+<ul>
+<li>Valida criação com status 201</li>
+<li>Verifica presença do ID no response</li>
+<li>Confirma dados corretos no post criado</li>
+</ul>
+</li>
+<li>
+<p><strong>Deve listar posts</strong></p>
+<ul>
+<li>Valida status 200</li>
+<li>Verifica se retorna array</li>
+<li>Confirma presença de posts na lista</li>
+</ul>
+</li>
+<li>
+<p><strong>Deve buscar post por ID</strong></p>
+<ul>
+<li>Valida status 200</li>
+<li>Verifica dados corretos do post</li>
+</ul>
+</li>
+<li>
+<p><strong>Deve editar um post</strong></p>
+<ul>
+<li>Valida status 200</li>
+<li>Confirma atualização dos dados</li>
+</ul>
+</li>
+<li>
+<p><strong>Deve deletar um post</strong></p>
+<ul>
+<li>Valida status 200</li>
+<li>Verifica mensagem de sucesso</li>
+</ul>
+</li>
+<li>
+<p><strong>Deve buscar posts por palavra-chave</strong></p>
+<ul>
+<li>Valida status 200</li>
+<li>Confirma busca case-insensitive</li>
+<li>Verifica resultados corretos</li>
+</ul>
+</li>
+<li>
+<p><strong>Deve retornar erro ao buscar sem termo</strong></p>
+<ul>
+<li>Valida status 400</li>
+<li>Verifica mensagem de erro</li>
+</ul>
+</li>
+</ol>
+<h3 id="cobertura-de-testes">Cobertura de Testes</h3>
+<pre class="hljs"><code><div>------------|---------|----------|---------|---------|-------------------
+File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+------------|---------|----------|---------|---------|-------------------
+All files   |   81.53 |     62.5 |   77.77 |   85.24 |
+ src        |   81.25 |      100 |   33.33 |   81.25 |
+  app.js    |   81.25 |      100 |   33.33 |   81.25 | 16-17,21
+ src/models |     100 |      100 |     100 |     100 |
+  Post.js   |     100 |      100 |     100 |     100 |
+ src/routes |   80.43 |     62.5 |     100 |   85.71 |
+  posts.js  |   80.43 |     62.5 |     100 |   85.71 | 12,29,40,52,68,79
+------------|---------|----------|---------|---------|-------------------
+</div></code></pre>
+<p><strong>Cobertura Total: 81.53%</strong></p>
+<p>A cobertura superior a 80% demonstra que a maior parte do código está validada automaticamente, garantindo qualidade e confiabilidade.</p>
+<h3 id="execu%C3%A7%C3%A3o-dos-testes">Execução dos Testes</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Rodar testes</span>
+npm <span class="hljs-built_in">test</span>
+
+<span class="hljs-comment"># Rodar com cobertura</span>
+npm <span class="hljs-built_in">test</span> -- --coverage
+
+<span class="hljs-comment"># Rodar no Docker</span>
+docker <span class="hljs-built_in">exec</span> tech-challenge-app npm <span class="hljs-built_in">test</span>
+</div></code></pre>
+<hr>
+<h2 id="11-containeriza%C3%A7%C3%A3o-com-docker">11. Containerização com Docker</h2>
+<h3 id="dockerfile">Dockerfile</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">18</span>
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /usr/src/app</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> package*.json ./</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> npm install</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> . .</span>
+<span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
+<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"npm"</span>, <span class="hljs-string">"start"</span>]</span>
+</div></code></pre>
+<h3 id="docker-compose">Docker Compose</h3>
+<p>A aplicação utiliza Docker Compose para orquestrar dois serviços:</p>
+<ol>
+<li><strong>App</strong>: Aplicação Node.js</li>
+<li><strong>MongoDB</strong>: Banco de dados</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-attr">services:</span>
+  <span class="hljs-attr">app:</span>
+    <span class="hljs-attr">build:</span> <span class="hljs-string">.</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">'3000:3000'</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MONGODB_URI=mongodb://mongo:27017/fiap_tech_challenge</span>
+    <span class="hljs-attr">depends_on:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">mongo</span>
+  
+  <span class="hljs-attr">mongo:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">mongo:6.0</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">'27017:27017'</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">mongo_data:/data/db</span>
+</div></code></pre>
+<h3 id="comandos-docker">Comandos Docker</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Subir aplicação</span>
+docker-compose up --build -d
+
+<span class="hljs-comment"># Ver containers rodando</span>
+docker ps
+
+<span class="hljs-comment"># Ver logs</span>
+docker logs tech-challenge-app
+
+<span class="hljs-comment"># Parar aplicação</span>
+docker-compose down
+</div></code></pre>
+<hr>
+<h2 id="12-cicd">12. CI/CD</h2>
+<h3 id="pipeline-github-actions">Pipeline GitHub Actions</h3>
+<p>O projeto utiliza GitHub Actions para executar testes automaticamente a cada push ou pull request.</p>
+<p><strong>Workflow (.github/workflows/ci.yml):</strong></p>
+<pre class="hljs"><code><div><span class="hljs-attr">name:</span> <span class="hljs-string">CI</span>
+
+<span class="hljs-attr">on:</span>
+  <span class="hljs-attr">push:</span>
+    <span class="hljs-attr">branches:</span> <span class="hljs-string">[</span> <span class="hljs-string">main</span> <span class="hljs-string">]</span>
+  <span class="hljs-attr">pull_request:</span>
+    <span class="hljs-attr">branches:</span> <span class="hljs-string">[</span> <span class="hljs-string">main</span> <span class="hljs-string">]</span>
+
+<span class="hljs-attr">jobs:</span>
+  <span class="hljs-attr">build-and-test:</span>
+    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span>
+    <span class="hljs-attr">services:</span>
+      <span class="hljs-attr">mongo:</span>
+        <span class="hljs-attr">image:</span> <span class="hljs-string">mongo:6.0</span>
+        <span class="hljs-attr">ports:</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-number">27017</span><span class="hljs-string">:27017</span>
+    <span class="hljs-attr">steps:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v4</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v4</span>
+        <span class="hljs-attr">with:</span>
+          <span class="hljs-attr">node-version:</span> <span class="hljs-number">18</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">ci</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">test</span>
+        <span class="hljs-attr">env:</span>
+          <span class="hljs-attr">MONGODB_URI:</span> <span class="hljs-string">mongodb://localhost:27017/fiap_tech_challenge_test</span>
+</div></code></pre>
+<h3 id="benef%C3%ADcios-do-cicd">Benefícios do CI/CD</h3>
+<ul>
+<li>✅ Execução automática de testes</li>
+<li>✅ Detecção precoce de bugs</li>
+<li>✅ Garantia de qualidade contínua</li>
+<li>✅ Feedback rápido para desenvolvedores</li>
+<li>✅ Prevenção de regressões</li>
+</ul>
+<hr>
+<h2 id="13-como-executar-o-projeto">13. Como Executar o Projeto</h2>
+<h3 id="pr%C3%A9-requisitos">Pré-requisitos</h3>
+<ul>
+<li>Docker e Docker Compose instalados</li>
+<li>Git instalado</li>
+<li>Porta 3000 disponível</li>
+</ul>
+<h3 id="passo-a-passo">Passo a Passo</h3>
+<ol>
+<li><strong>Clone o repositório</strong></li>
+</ol>
+<pre class="hljs"><code><div>git <span class="hljs-built_in">clone</span> https://github.com/claytorrr/fiap-tech-challenge-fase-2.git
+<span class="hljs-built_in">cd</span> fiap-tech-challenge-fase-2
+</div></code></pre>
+<ol start="2">
+<li><strong>Suba a aplicação com Docker</strong></li>
+</ol>
+<pre class="hljs"><code><div>docker-compose up --build -d
+</div></code></pre>
+<ol start="3">
+<li><strong>Verifique se está rodando</strong></li>
+</ol>
+<pre class="hljs"><code><div>curl http://localhost:3000/
+<span class="hljs-comment"># Deve retornar: API Tech Challenge rodando!</span>
+</div></code></pre>
+<ol start="4">
+<li><strong>Teste os endpoints</strong></li>
+</ol>
+<ul>
+<li>Importe a collection <code>Insomnia_Tech_Challenge.json</code> no Insomnia</li>
+<li>Ou use curl/Postman para testar os endpoints</li>
+</ul>
+<ol start="5">
+<li><strong>Execute os testes</strong></li>
+</ol>
+<pre class="hljs"><code><div>docker <span class="hljs-built_in">exec</span> tech-challenge-app npm <span class="hljs-built_in">test</span>
+</div></code></pre>
+<ol start="6">
+<li><strong>Para parar a aplicação</strong></li>
+</ol>
+<pre class="hljs"><code><div>docker-compose down
+</div></code></pre>
+<hr>
+<h2 id="14-evid%C3%AAncias-de-funcionamento">14. Evidências de Funcionamento</h2>
+<h3 id="testes-passando">Testes Passando</h3>
+<pre class="hljs"><code><div>PASS tests/posts.test.js
+  Posts API
+    ✓ deve criar um novo post (56 ms)
+    ✓ deve listar posts (16 ms)
+    ✓ deve buscar post por id (12 ms)
+    ✓ deve editar um post (12 ms)
+    ✓ deve deletar um post (10 ms)
+    ✓ deve buscar posts por palavra-chave (10 ms)
+    ✓ deve retornar erro ao buscar sem termo (6 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       7 passed, 7 total
+Time:        0.39 s
+</div></code></pre>
+<h3 id="containers-rodando">Containers Rodando</h3>
+<pre class="hljs"><code><div>CONTAINER ID   IMAGE                            STATUS       PORTS
+d342eff6d1ab   fiap-tech-challenge-fase-2-app   Up 2 hours   0.0.0.0:3000-&gt;3000/tcp
+a443f61f6519   mongo:6.0                        Up 2 hours   0.0.0.0:27017-&gt;27017/tcp
+</div></code></pre>
+<h3 id="api-respondendo">API Respondendo</h3>
+<pre class="hljs"><code><div>$ curl http://localhost:3000/posts
+[{<span class="hljs-string">"_id"</span>:<span class="hljs-string">"..."</span>,<span class="hljs-string">"titulo"</span>:<span class="hljs-string">"..."</span>,<span class="hljs-string">"conteudo"</span>:<span class="hljs-string">"..."</span>,<span class="hljs-string">"autor"</span>:<span class="hljs-string">"..."</span>}]
+</div></code></pre>
+<hr>
+<h2 id="15-desafios-e-aprendizados">15. Desafios e Aprendizados</h2>
+<h3 id="desafios-enfrentados">Desafios Enfrentados</h3>
+<ol>
+<li>
+<p><strong>Configuração do Docker</strong></p>
+<ul>
+<li><strong>Problema</strong>: Volume mapeado causava conflito com node_modules</li>
+<li><strong>Solução</strong>: Criação de .dockerignore e remoção do volume no docker-compose</li>
+</ul>
+</li>
+<li>
+<p><strong>Ordem das Rotas</strong></p>
+<ul>
+<li><strong>Problema</strong>: Rota <code>/posts/search</code> conflitando com <code>/posts/:id</code></li>
+<li><strong>Solução</strong>: Reordenação das rotas (específicas antes de parametrizadas)</li>
+</ul>
+</li>
+<li>
+<p><strong>Configuração do CI/CD</strong></p>
+<ul>
+<li><strong>Problema</strong>: MongoDB não disponível durante testes</li>
+<li><strong>Solução</strong>: Configuração de service container no GitHub Actions</li>
+</ul>
+</li>
+<li>
+<p><strong>Cobertura de Testes</strong></p>
+<ul>
+<li><strong>Problema</strong>: Handlers de erro não cobertos</li>
+<li><strong>Solução</strong>: Adição de testes específicos para cenários de erro</li>
+</ul>
+</li>
+</ol>
+<h3 id="aprendizados">Aprendizados</h3>
+<ul>
+<li>✅ <strong>Docker</strong>: Containerização e orquestração de aplicações</li>
+<li>✅ <strong>NoSQL</strong>: Modelagem de dados em MongoDB</li>
+<li>✅ <strong>Testes</strong>: Importância de testes automatizados</li>
+<li>✅ <strong>CI/CD</strong>: Automação de qualidade de código</li>
+<li>✅ <strong>REST</strong>: Design de APIs RESTful</li>
+<li>✅ <strong>Git/GitHub</strong>: Versionamento e colaboração</li>
+</ul>
+<hr>
+<h2 id="16-conclus%C3%A3o">16. Conclusão</h2>
+<p>O projeto <strong>Tech Challenge - Fase 2</strong> foi concluído com sucesso, atendendo a todos os requisitos propostos:</p>
+<p>✅ <strong>API RESTful completa</strong> com CRUD e busca<br>
+✅ <strong>Persistência de dados</strong> em MongoDB<br>
+✅ <strong>Containerização</strong> com Docker<br>
+✅ <strong>Testes automatizados</strong> com 81.53% de cobertura<br>
+✅ <strong>CI/CD</strong> configurado com GitHub Actions<br>
+✅ <strong>Documentação completa</strong> e clara</p>
+<p>A solução desenvolvida é robusta, escalável e mantível, seguindo boas práticas de desenvolvimento de software e arquitetura. O projeto demonstra a aplicação prática dos conceitos aprendidos na pós-graduação e prepara o terreno para desafios mais complexos nas próximas fases.</p>
+<hr>
+<h2 id="refer%C3%AAncias">Referências</h2>
+<ul>
+<li>Node.js Documentation: https://nodejs.org/docs</li>
+<li>Express.js Guide: https://expressjs.com/</li>
+<li>MongoDB Manual: https://docs.mongodb.com/</li>
+<li>Jest Documentation: https://jestjs.io/docs</li>
+<li>Docker Documentation: https://docs.docker.com/</li>
+<li>GitHub Actions: https://docs.github.com/actions</li>
+</ul>
+<hr>
+<p><strong>Desenvolvido por Clayton Gomes</strong><br>
+<strong>FIAP - Software Architecture</strong><br>
+<strong>Janeiro de 2026</strong></p>
+
+</body>
+</html>

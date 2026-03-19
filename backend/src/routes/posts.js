@@ -13,6 +13,23 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET /posts/search - Busca de Posts (deve vir antes de /:id)
+router.get('/search', async (req, res) => {
+  try {
+    const { q } = req.query;
+    if (!q) return res.status(400).json({ error: 'Termo de busca não informado.' });
+    const posts = await Post.find({
+      $or: [
+        { titulo: { $regex: q, $options: 'i' } },
+        { conteudo: { $regex: q, $options: 'i' } }
+      ]
+    });
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao buscar posts.' });
+  }
+});
+
 // GET /posts/:id - Leitura de Post
 router.get('/:id', async (req, res) => {
   try {
@@ -60,23 +77,6 @@ router.delete('/:id', async (req, res) => {
     res.json({ message: 'Post removido com sucesso.' });
   } catch (err) {
     res.status(500).json({ error: 'Erro ao remover post.' });
-  }
-});
-
-// GET /posts/search - Busca de Posts
-router.get('/search', async (req, res) => {
-  try {
-    const { q } = req.query;
-    if (!q) return res.status(400).json({ error: 'Termo de busca não informado.' });
-    const posts = await Post.find({
-      $or: [
-        { titulo: { $regex: q, $options: 'i' } },
-        { conteudo: { $regex: q, $options: 'i' } }
-      ]
-    });
-    res.json(posts);
-  } catch (err) {
-    res.status(500).json({ error: 'Erro ao buscar posts.' });
   }
 });
 

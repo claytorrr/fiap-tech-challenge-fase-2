@@ -57,4 +57,20 @@ describe('Posts API', () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body.message).toBe('Post removido com sucesso.');
   });
+
+  it('deve buscar posts por palavra-chave', async () => {
+    await Post.create({ titulo: 'JavaScript é incrível', conteudo: 'Conteúdo sobre JS', autor: 'Autor' });
+    await Post.create({ titulo: 'Python para iniciantes', conteudo: 'Conteúdo sobre Python', autor: 'Autor' });
+    const res = await request(app).get('/posts/search?q=JavaScript');
+    expect(res.statusCode).toEqual(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBe(1);
+    expect(res.body[0].titulo).toContain('JavaScript');
+  });
+
+  it('deve retornar erro ao buscar sem termo', async () => {
+    const res = await request(app).get('/posts/search');
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.error).toBe('Termo de busca não informado.');
+  });
 });
