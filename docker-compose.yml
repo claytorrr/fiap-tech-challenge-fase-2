@@ -12,6 +12,19 @@ services:
       - mongo
     restart: unless-stopped
 
+  frontend:
+    build: ./frontend
+    container_name: tech-challenge-frontend
+    ports:
+      - '3001:3000'
+    environment:
+      - REACT_APP_API_URL=http://localhost:3000
+    depends_on:
+      - backend
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
   mongo:
     image: mongo:6.0
     container_name: tech-challenge-mongo
