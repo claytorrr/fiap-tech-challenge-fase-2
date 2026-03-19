@@ -81,7 +81,8 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    // Força reload completo para garantir limpeza total do estado
+    window.location.href = '/';
   };
 
   return (
