@@ -14,6 +14,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET /posts/me - Posts do usuário autenticado (PROTEGIDA - deve vir antes de /search)
+router.get('/me', authMiddleware, async (req, res) => {
+  try {
+    const posts = await Post.find({ userId: req.userId }).sort({ criadoEm: -1 });
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao buscar posts.' });
+  }
+});
+
 // GET /posts/search - Busca de Posts (deve vir antes de /:id)
 router.get('/search', async (req, res) => {
   try {
@@ -46,7 +56,12 @@ router.get('/:id', async (req, res) => {
 router.post('/', authMiddleware, async (req, res) => {
   try {
     const { titulo, conteudo, autor } = req.body;
-    const novoPost = new Post({ titulo, conteudo, autor });
+    const novoPost = new Post({ 
+      titulo, 
+      conteudo, 
+      autor,
+      userId: req.userId // Vincula o post ao usuário autenticado
+    });
     await novoPost.save();
     res.status(201).json(novoPost);
   } catch (err) {
@@ -57,14 +72,21 @@ router.post('/', authMiddleware, async (req, res) => {
 // PUT /posts/:id - Edição de Postagem (PROTEGIDA)
 router.put('/:id', authMiddleware, async (req, res) => {
   try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ error: 'Post não encontrado.' });
+    
+    // Verifica se o post pertence ao usuário autenticado
+    if (post.userId.toString() !== req.userId) {
+      return res.status(403).json({ error: 'Você não tem permissão para editar este post.' });
+    }
+    
     const { titulo, conteudo, autor } = req.body;
-    const postAtualizado = await Post.findByIdAndUpdate(
-      req.params.id,
-      { titulo, conteudo, autor },
-      { new: true, runValidators: true }
-    );
-    if (!postAtualizado) return res.status(404).json({ error: 'Post não encontrado.' });
-    res.json(postAtualizado);
+    post.titulo = titulo;
+    post.conteudo = conteudo;
+    post.autor = autor;
+    await post.save();
+    
+    res.json(post);
   } catch (err) {
     res.status(400).json({ error: 'Erro ao editar post.' });
   }
@@ -73,8 +95,15 @@ router.put('/:id', authMiddleware, async (req, res) => {
 // DELETE /posts/:id - Exclusão de Postagem (PROTEGIDA)
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    const postRemovido = await Post.findByIdAndDelete(req.params.id);
-    if (!postRemovido) return res.status(404).json({ error: 'Post não encontrado.' });
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ error: 'Post não encontrado.' });
+    
+    // Verifica se o post pertence ao usuário autenticado
+    if (post.userId.toString() !== req.userId) {
+      return res.status(403).json({ error: 'Você não tem permissão para excluir este post.' });
+    }
+    
+    await Post.findByIdAndDelete(req.params.id);
     res.json({ message: 'Post removido com sucesso.' });
   } catch (err) {
     res.status(500).json({ error: 'Erro ao remover post.' });

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { getPosts, deletePost } from '../services/api';
+import { getMyPosts, deletePost } from '../services/api';
 import Loading from '../components/Loading';
 
 const Container = styled.div`
@@ -141,13 +141,14 @@ const AdminPanel = () => {
   const loadPosts = async () => {
     try {
       setLoading(true);
-      const data = await getPosts();
+      const data = await getMyPosts();
       setPosts(data);
     } catch (err) {
       setError('Erro ao carregar posts. Tente novamente.');
     } finally {
       setLoading(false);
     }
+  };
   };
 
   const handleDelete = async (id, title) => {

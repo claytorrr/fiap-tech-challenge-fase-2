@@ -29,6 +29,11 @@ export const getPosts = async () => {
   return response.data;
 };
 
+export const getMyPosts = async () => {
+  const response = await api.get('/posts/me');
+  return response.data;
+};
+
 export const getPostById = async (id) => {
   const response = await api.get(`/posts/${id}`);
   return response.data;
@@ -54,9 +59,19 @@ export const deletePost = async (id) => {
   return response.data;
 };
 
-// Auth (será implementado depois)
+// Auth (já funcional)
 export const login = async (credentials) => {
   const response = await api.post('/auth/login', credentials);
+  return response.data;
+};
+
+export const register = async (userData) => {
+  const response = await api.post('/auth/register', userData);
+  return response.data;
+};
+
+export const getMe = async () => {
+  const response = await api.get('/auth/me');
   return response.data;
 };
 
