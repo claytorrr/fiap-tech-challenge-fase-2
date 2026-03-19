@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -76,17 +76,10 @@ const LogoutButton = styled.button`
 `;
 
 const Header = () => {
-  const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
 
   const handleLogout = () => {
-    // Navega PRIMEIRO para a home, DEPOIS faz logout
-    // Isso previne que o PrivateRoute redirecione para /login
-    navigate('/', { replace: true });
-    // Usa setTimeout para garantir que a navegação aconteça primeiro
-    setTimeout(() => {
-      logout();
-    }, 0);
+    logout();
   };
 
   return (
