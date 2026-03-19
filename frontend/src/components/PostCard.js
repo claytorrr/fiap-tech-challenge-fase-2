@@ -44,7 +44,7 @@ const Author = styled.span`
   font-weight: 500;
 `;
 
-const Date = styled.span``;
+const DateText = styled.span``;
 
 const ReadMore = styled(Link)`
   color: ${props => props.theme.colors.primary};
@@ -58,12 +58,12 @@ const ReadMore = styled(Link)`
 
 const PostCard = ({ post }) => {
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-    });
+    if (!dateString) return '';
+    // Formatação simples sem usar Date constructor
+    const d = dateString.split('T')[0].split('-');
+    const months = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 
+                    'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    return `${d[2]} de ${months[parseInt(d[1]) - 1]} de ${d[0]}`;
   };
 
   return (
@@ -74,7 +74,7 @@ const PostCard = ({ post }) => {
       <Content>{post.conteudo}</Content>
       <Meta>
         <Author>Por {post.autor}</Author>
-        <Date>{formatDate(post.criadoEm)}</Date>
+        <DateText>{formatDate(post.criadoEm)}</DateText>
       </Meta>
       <div style={{ marginTop: '16px' }}>
         <ReadMore to={`/post/${post._id}`}>Ler mais →</ReadMore>
