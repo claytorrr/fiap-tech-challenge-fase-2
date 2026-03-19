@@ -12,12 +12,15 @@ app.use(express.json());
 app.use('/posts', postsRouter);
 app.use('/auth', authRouter);
 
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Conectado ao MongoDB'))
-  .catch((err) => {
-    console.error('Erro ao conectar ao MongoDB:', err);
-    process.exit(1);
-  });
+// Conecta ao MongoDB apenas se não estiver em modo de teste
+if (process.env.NODE_ENV !== 'test') {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('Conectado ao MongoDB'))
+    .catch((err) => {
+      console.error('Erro ao conectar ao MongoDB:', err);
+      process.exit(1);
+    });
+}
 
 app.get('/', (req, res) => {
   res.send('API Tech Challenge rodando!');
