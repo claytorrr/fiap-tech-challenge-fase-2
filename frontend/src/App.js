@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyles, theme } from './styles/GlobalStyles';
 import Header from './components/Header';
 import Home from './pages/Home';
+import PostDetail from './pages/PostDetail';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/post/:id" element={<PostDetail />} />
           {/* Outras rotas serão adicionadas depois */}
         </Routes>
       </Router>
