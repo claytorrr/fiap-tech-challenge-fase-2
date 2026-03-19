@@ -41,7 +41,7 @@ router.get('/search', async (req, res) => {
   }
 });
 
-// GET /posts/:id - Leitura de Post
+// GET /posts/:id - Leitura de Post (DEVE VIR DEPOIS de /me e /search)
 router.get('/:id', async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
