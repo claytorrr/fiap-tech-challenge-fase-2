@@ -14,7 +14,6 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
@@ -66,18 +65,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setIsLoggingOut(true);
     localStorage.removeItem('token');
     setToken(null);
     setUser(null);
-    // Redireciona usando window.location para garantir reload completo
-    window.location.href = '/';
   };
 
   const value = {
     user,
     loading,
-    isLoggingOut,
     isAuthenticated: !!user,
     login,
     register,
