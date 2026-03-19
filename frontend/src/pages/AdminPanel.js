@@ -149,7 +149,6 @@ const AdminPanel = () => {
       setLoading(false);
     }
   };
-  };
 
   const handleDelete = async (id, title) => {
     if (!window.confirm(`Tem certeza que deseja excluir o post "${title}"?`)) {
