@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useAuth } from '../contexts/AuthContext';
 
 const HeaderContainer = styled.header`
   background-color: ${props => props.theme.colors.primary};
@@ -49,14 +50,55 @@ const NavLink = styled(Link)`
   }
 `;
 
+const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${props => props.theme.spacing.md};
+`;
+
+const UserName = styled.span`
+  font-weight: 500;
+`;
+
+const LogoutButton = styled.button`
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid white;
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.md};
+  border-radius: ${props => props.theme.borderRadius};
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+`;
+
 const Header = () => {
+  const { user, isAuthenticated, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <HeaderContainer>
       <HeaderContent>
         <Logo to="/">Blog dos Professores</Logo>
         <Nav>
           <NavLink to="/">Início</NavLink>
-          <NavLink to="/login">Login</NavLink>
+          {isAuthenticated ? (
+            <>
+              <NavLink to="/admin">Meus Posts</NavLink>
+              <UserInfo>
+                <UserName>Olá, {user?.nome}</UserName>
+                <LogoutButton onClick={handleLogout}>Sair</LogoutButton>
+              </UserInfo>
+            </>
+          ) : (
+            <NavLink to="/login">Login</NavLink>
+          )}
         </Nav>
       </HeaderContent>
     </HeaderContainer>
