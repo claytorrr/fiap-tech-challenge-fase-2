@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -76,10 +76,12 @@ const LogoutButton = styled.button`
 `;
 
 const Header = () => {
+  const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
 
   const handleLogout = () => {
     logout();
+    navigate('/');
   };
 
   return (
