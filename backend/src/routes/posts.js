@@ -1,5 +1,6 @@
 const express = require('express');
 const Post = require('../models/Post');
+const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -41,8 +42,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /posts - Criação de Postagem
-router.post('/', async (req, res) => {
+// POST /posts - Criação de Postagem (PROTEGIDA)
+router.post('/', authMiddleware, async (req, res) => {
   try {
     const { titulo, conteudo, autor } = req.body;
     const novoPost = new Post({ titulo, conteudo, autor });
@@ -53,8 +54,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /posts/:id - Edição de Postagem
-router.put('/:id', async (req, res) => {
+// PUT /posts/:id - Edição de Postagem (PROTEGIDA)
+router.put('/:id', authMiddleware, async (req, res) => {
   try {
     const { titulo, conteudo, autor } = req.body;
     const postAtualizado = await Post.findByIdAndUpdate(
@@ -69,8 +70,8 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE /posts/:id - Exclusão de Postagem
-router.delete('/:id', async (req, res) => {
+// DELETE /posts/:id - Exclusão de Postagem (PROTEGIDA)
+router.delete('/:id', authMiddleware, async (req, res) => {
   try {
     const postRemovido = await Post.findByIdAndDelete(req.params.id);
     if (!postRemovido) return res.status(404).json({ error: 'Post não encontrado.' });

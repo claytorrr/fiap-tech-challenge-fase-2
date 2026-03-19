@@ -8,6 +8,7 @@ services:
     environment:
       - MONGODB_URI=mongodb://mongo:27017/fiap_tech_challenge
       - PORT=3000
+      - JWT_SECRET=tech-challenge-secret-key-change-in-production
     depends_on:
       - mongo
     restart: unless-stopped

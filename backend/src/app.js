@@ -3,12 +3,14 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const postsRouter = require('./routes/posts');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use('/posts', postsRouter);
+app.use('/auth', authRouter);
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Conectado ao MongoDB'))
