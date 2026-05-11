@@ -75,18 +75,13 @@ router.put('/:id', authMiddleware, requireRole('teacher'), async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ error: 'Post não encontrado.' });
-    
-    // Verifica se o post pertence ao usuário autenticado
-    if (post.userId.toString() !== req.userId) {
-      return res.status(403).json({ error: 'Você não tem permissão para editar este post.' });
-    }
-    
+
     const { titulo, conteudo, autor } = req.body;
     post.titulo = titulo;
     post.conteudo = conteudo;
     post.autor = autor;
     await post.save();
-    
+
     res.json(post);
   } catch (err) {
     res.status(400).json({ error: 'Erro ao editar post.' });
@@ -96,15 +91,8 @@ router.put('/:id', authMiddleware, requireRole('teacher'), async (req, res) => {
 // DELETE /posts/:id - Exclusão de Postagem (apenas professores)
 router.delete('/:id', authMiddleware, requireRole('teacher'), async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findByIdAndDelete(req.params.id);
     if (!post) return res.status(404).json({ error: 'Post não encontrado.' });
-    
-    // Verifica se o post pertence ao usuário autenticado
-    if (post.userId.toString() !== req.userId) {
-      return res.status(403).json({ error: 'Você não tem permissão para excluir este post.' });
-    }
-    
-    await Post.findByIdAndDelete(req.params.id);
     res.json({ message: 'Post removido com sucesso.' });
   } catch (err) {
     res.status(500).json({ error: 'Erro ao remover post.' });

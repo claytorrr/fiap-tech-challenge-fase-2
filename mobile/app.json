@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "FIAP Blog",
+    "slug": "fiap-tech-challenge-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#2563EB"
+      },
+      "package": "com.fiap.techchallengeblog"
+    },
+    "ios": {
+      "bundleIdentifier": "com.fiap.techchallengeblog"
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
