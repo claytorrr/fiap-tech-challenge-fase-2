@@ -32,8 +32,14 @@ export default function HomeScreen({ navigation }) {
   }, []);
 
   useEffect(() => {
-    fetchAllPosts();
-  }, [fetchAllPosts]);
+    // Recarrega posts sempre que a tela recebe foco (ex: ao voltar do admin)
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (search.trim() === '') {
+        fetchAllPosts();
+      }
+    });
+    return unsubscribe;
+  }, [navigation, fetchAllPosts, search]);
 
   // Busca conectada ao endpoint /posts/search — TOTALMENTE FUNCIONAL
   const handleSearch = async (text) => {

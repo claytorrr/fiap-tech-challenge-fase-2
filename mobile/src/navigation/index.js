@@ -103,7 +103,16 @@ function TeacherTabs() {
         },
       })}
     >
-      <Tab.Screen name="PostsTab" component={HomeStack} options={{ title: 'Posts' }} />
+      <Tab.Screen
+        name="PostsTab"
+        component={HomeStack}
+        options={{ title: 'Posts' }}
+        listeners={({ navigation }) => ({
+          tabPress: () => {
+            navigation.navigate('PostsTab', { screen: 'Home' });
+          },
+        })}
+      />
       <Tab.Screen name="AdminTab" component={AdminStack} options={{ title: 'Admin' }} />
       <Tab.Screen name="TeachersTab" component={TeachersStack} options={{ title: 'Professores' }} />
       <Tab.Screen name="StudentsTab" component={StudentsStack} options={{ title: 'Alunos' }} />
@@ -130,6 +139,11 @@ function StudentTabs() {
             <Ionicons name="newspaper-outline" size={size} color={color} />
           ),
         }}
+        listeners={({ navigation }) => ({
+          tabPress: () => {
+            navigation.navigate('PostsTab', { screen: 'Home' });
+          },
+        })}
       />
     </Tab.Navigator>
   );
