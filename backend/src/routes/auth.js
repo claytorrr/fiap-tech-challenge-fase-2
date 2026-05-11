@@ -1,13 +1,14 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
 // Registro de novo usuário
 router.post('/register', async (req, res) => {
   try {
-    const { nome, email, senha } = req.body;
+    const { nome, email, senha, role } = req.body;
 
     // Verificar se usuário já existe
     const userExiste = await User.findOne({ email });
@@ -16,7 +17,7 @@ router.post('/register', async (req, res) => {
     }
 
     // Criar novo usuário
-    const user = new User({ nome, email, senha });
+    const user = new User({ nome, email, senha, role: role || 'student' });
     await user.save();
 
     // Gerar token
@@ -28,7 +29,8 @@ router.post('/register', async (req, res) => {
       user: {
         id: user._id,
         nome: user.nome,
-        email: user.email
+        email: user.email,
+        role: user.role
       },
       token
     });
@@ -63,7 +65,8 @@ router.post('/login', async (req, res) => {
       user: {
         id: user._id,
         nome: user.nome,
-        email: user.email
+        email: user.email,
+        role: user.role
       },
       token
     });
@@ -72,18 +75,11 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Verificar token (rota protegida de teste)
-router.get('/me', async (req, res) => {
+// Retorna dados do usuário autenticado
+router.get('/me', authMiddleware, async (req, res) => {
   try {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-    
-    if (!token) {
-      return res.status(401).json({ error: 'Token não fornecido.' });
-    }
+    const user = await User.findById(req.userId).select('-senha');
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id).select('-senha');
-    
     if (!user) {
       return res.status(404).json({ error: 'Usuário não encontrado.' });
     }
