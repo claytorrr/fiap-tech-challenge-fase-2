@@ -3,6 +3,7 @@
 ## Sumário
 - [Descrição](#descrição)
 - [Setup do Projeto](#setup-do-projeto)
+- [Mobile (Fase 4)](#mobile-fase-4)
 - [Arquitetura](#arquitetura)
 - [Funcionalidades](#funcionalidades)
 - [Endpoints da API](#endpoints-da-api)
@@ -13,17 +14,18 @@
 - [Autores](#autores)
 
 ## Descrição
-Plataforma completa de blogging para professores da rede pública, com interface React moderna e API RESTful em Node.js. Permite que professores criem, editem, visualizem e excluam postagens de forma segura, com sistema de autenticação JWT. Desenvolvida em monorepo com backend Node.js + MongoDB e frontend React, completamente dockerizada.
+Plataforma completa de blogging para professores da rede pública, com interface React moderna, API RESTful em Node.js e aplicativo mobile em React Native. Permite que professores criem, editem, visualizem e excluam postagens de forma segura, com sistema de autenticação JWT e controle de permissões por papel (professor/aluno). Desenvolvida em monorepo com backend Node.js + MongoDB, frontend React e mobile React Native, completamente dockerizada.
 
-**Fase 3 - Tech Challenge FIAP**
+**Fase 4 - Tech Challenge FIAP**
 
 ## Setup do Projeto
 
 ### Pré-requisitos
-- Docker e Docker Compose (obrigatório)
-- Nenhuma instalação local de Node.js ou MongoDB é necessária!
+- Docker e Docker Compose (para backend e MongoDB)
+- Node.js 18+ (para rodar o mobile localmente)
+- Xcode + iOS Simulator **ou** Android Studio **ou** Expo Go no celular
 
-### Rodando o projeto (Recomendado)
+### Rodando backend + banco (Docker)
 
 1. Clone o repositório:
    ```sh
@@ -31,29 +33,127 @@ Plataforma completa de blogging para professores da rede pública, com interface
    cd fiap-tech-challenge-fase-2
    ```
 
-2. Inicie todos os serviços com Docker Compose:
+2. Suba backend e MongoDB:
    ```sh
-   docker-compose up --build
+   docker compose up backend mongo -d --build
    ```
 
-3. Aguarde a compilação e inicialização (pode levar alguns minutos na primeira vez)
-
-4. Acesse a aplicação:
-   - **Frontend**: [http://localhost:3001](http://localhost:3001)
+3. Serviços disponíveis:
    - **Backend API**: [http://localhost:3000](http://localhost:3000)
+   - **Frontend Web**: suba com `docker compose up frontend -d`
    - **MongoDB**: `localhost:27017`
+
+### Rodando o app mobile
+
+```sh
+cd mobile
+npm install --registry https://registry.npmjs.org
+npx expo start --ios      # iOS Simulator
+npx expo start --android  # Android Emulator
+npx expo start            # Expo Go (celular físico)
+```
 
 ### Primeiro acesso
 
-1. Acesse [http://localhost:3001](http://localhost:3001)
-2. Clique em "Login" no header
-3. Vá para a aba "Cadastro"
-4. Crie sua conta de professor com:
-   - Nome completo
-   - Email
-   - Senha (mínimo 6 caracteres)
-5. Após o cadastro, você será automaticamente autenticado
-6. Clique em "Meus Posts" para começar a gerenciar seus posts
+Crie um usuário professor via API:
+```sh
+curl -X POST http://localhost:3000/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"nome":"Professor","email":"prof@fiap.com","senha":"123456","role":"teacher"}'
+```
+
+---
+
+## Mobile (Fase 4)
+
+### Arquitetura do app mobile
+
+O app foi desenvolvido com **React Native + Expo SDK 51**, utilizando:
+
+| Tecnologia | Uso |
+|---|---|
+| React Native 0.74 | Framework mobile |
+| Expo SDK 51 | Toolchain e build |
+| React Navigation 6 | Navegação Stack + Bottom Tabs |
+| Axios | Requisições HTTP à API REST |
+| AsyncStorage | Persistência do token JWT |
+| Context API | Gerenciamento de estado de autenticação |
+| Expo Vector Icons | Ícones da interface |
+
+### Estrutura de pastas do mobile
+
+```
+mobile/
+├── App.js                        # Ponto de entrada
+├── app.json                      # Configuração Expo
+├── babel.config.js
+├── Dockerfile
+└── src/
+    ├── api/
+    │   └── index.js              # Todas as chamadas à API REST
+    ├── contexts/
+    │   └── AuthContext.js        # Estado global de autenticação
+    ├── navigation/
+    │   └── index.js              # Rotas e tabs (professor/aluno)
+    ├── components/
+    │   └── Loading.js
+    └── screens/
+        ├── LoginScreen.js        # Tela de login
+        ├── HomeScreen.js         # Lista de posts + busca
+        ├── PostDetailScreen.js   # Leitura completa do post
+        ├── AdminPostsScreen.js   # Painel admin de posts
+        ├── CreatePostScreen.js   # Criar post
+        ├── EditPostScreen.js     # Editar post
+        ├── teachers/
+        │   ├── TeacherListScreen.js    # Listagem paginada
+        │   ├── CreateTeacherScreen.js  # Criar professor
+        │   └── EditTeacherScreen.js    # Editar professor
+        └── students/
+            ├── StudentListScreen.js    # Listagem paginada
+            ├── CreateStudentScreen.js  # Criar aluno
+            └── EditStudentScreen.js    # Editar aluno
+```
+
+### Telas e funcionalidades
+
+#### Perfil Professor (autenticado com `role: teacher`)
+- **Posts** — lista todos os posts com busca por palavras-chave em tempo real
+- **Admin** — gerencia posts (criar, editar, excluir)
+- **Professores** — listagem paginada com criar, editar e excluir
+- **Alunos** — listagem paginada com criar, editar e excluir
+
+#### Perfil Aluno (autenticado com `role: student`)
+- **Posts** — apenas visualização da lista e leitura completa dos posts
+
+### Controle de acesso
+- Rotas protegidas: navegação condicional baseada no `role` retornado pelo `/auth/me`
+- Professores: acesso total (CRUD de posts, professores e alunos)
+- Alunos: somente leitura de posts
+- Backend: endpoints de criação/edição/exclusão de posts e usuários exigem `role: teacher`
+
+### Integração com a API
+
+Todas as chamadas estão centralizadas em `src/api/index.js`:
+
+```
+GET    /posts               → lista posts
+GET    /posts/:id           → lê post
+GET    /posts/search?q=...  → busca posts (conectada ao campo de busca)
+POST   /posts               → cria post (teacher)
+PUT    /posts/:id           → edita post (teacher)
+DELETE /posts/:id           → exclui post (teacher)
+
+POST   /auth/login          → login
+GET    /auth/me             → valida sessão e obtém role
+
+GET    /users?role=teacher  → lista professores (paginado)
+GET    /users?role=student  → lista alunos (paginado)
+POST   /users               → cria usuário
+PUT    /users/:id           → edita usuário
+DELETE /users/:id           → exclui usuário
+```
+
+---
 
 ## Arquitetura
 
@@ -276,6 +376,16 @@ curl -X POST http://localhost:3000/posts \
 - Superação de problemas de ambiente e permissões (ex: node_modules, Docker, MongoDB)
 - Garantia de qualidade com testes automatizados e cobertura superior a 70%
 - Aprendizado prático de DevOps e boas práticas de versionamento
+
+### Fase 4
+- **React Native com Expo**: Desenvolvimento do app mobile com SDK 51, navegação Stack + Bottom Tabs
+- **Controle de acesso por role**: Navegação condicional professor/aluno baseada no JWT retornado pelo backend
+- **Busca conectada de ponta a ponta**: Campo de busca no mobile consome o endpoint `/posts/search` em tempo real
+- **CRUD completo de usuários**: Backend estendido com rotas `/users` (paginação, criação, edição, exclusão)
+- **Middleware de role**: `requireRole('teacher')` reutilizável protegendo rotas de criação/edição no backend
+- **Auto-refresh de listas**: Listener de foco nas telas recarrega dados ao retornar de outra tab
+- **Ambiente isolado**: Backend e MongoDB no Docker; Expo roda no host para comunicação com iOS Simulator
+- **Registry npm do trabalho**: Necessário usar `--registry https://registry.npmjs.org` para instalar dependências fora da rede corporativa
 
 ### Fase 3
 - **Reestruturação para monorepo**: Migração do projeto para estrutura backend/frontend
