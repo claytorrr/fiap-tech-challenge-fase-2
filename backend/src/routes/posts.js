@@ -1,6 +1,7 @@
 const express = require('express');
 const Post = require('../models/Post');
 const authMiddleware = require('../middleware/auth');
+const requireRole = require('../middleware/role');
 
 const router = express.Router();
 
@@ -52,8 +53,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /posts - Criação de Postagem (PROTEGIDA)
-router.post('/', authMiddleware, async (req, res) => {
+// POST /posts - Criação de Postagem (apenas professores)
+router.post('/', authMiddleware, requireRole('teacher'), async (req, res) => {
   try {
     const { titulo, conteudo, autor } = req.body;
     const novoPost = new Post({ 
@@ -69,8 +70,8 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
-// PUT /posts/:id - Edição de Postagem (PROTEGIDA)
-router.put('/:id', authMiddleware, async (req, res) => {
+// PUT /posts/:id - Edição de Postagem (apenas professores)
+router.put('/:id', authMiddleware, requireRole('teacher'), async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ error: 'Post não encontrado.' });
@@ -92,8 +93,8 @@ router.put('/:id', authMiddleware, async (req, res) => {
   }
 });
 
-// DELETE /posts/:id - Exclusão de Postagem (PROTEGIDA)
-router.delete('/:id', authMiddleware, async (req, res) => {
+// DELETE /posts/:id - Exclusão de Postagem (apenas professores)
+router.delete('/:id', authMiddleware, requireRole('teacher'), async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ error: 'Post não encontrado.' });
